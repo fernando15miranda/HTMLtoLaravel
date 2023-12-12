@@ -16,6 +16,12 @@ class ProyectoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function __construct(){
+        $this->middleware('auth');
+     }
+
+    
     public function index()
     {
         $proyectos = Proyecto::paginate();
@@ -45,7 +51,15 @@ class ProyectoController extends Controller
     {
         request()->validate(Proyecto::$rules);
 
-        $proyecto = Proyecto::create($request->all());
+        //$proyecto = Proyecto::create($request->all());
+
+        $proyecto = request()->except('_token');
+
+        if($request->hasFile('imagen')){
+            $proyecto['imagen'] = $request->file('imagen')->store('uploads','public');
+
+            Proyecto::insert($proyecto);
+        }
 
         return redirect()->route('proyectos.index')
             ->with('success', 'Proyecto created successfully.');
@@ -84,11 +98,24 @@ class ProyectoController extends Controller
      * @param  Proyecto $proyecto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Proyecto $proyecto)
+    public function update(Request $request, $id)
     {
-        request()->validate(Proyecto::$rules);
+        //request()->validate(Proyecto::$rules);
 
-        $proyecto->update($request->all());
+        $proyecto = request()->except('_token','_method');
+
+        //$proyecto->update($request->all());
+
+        if($request->hasFile('imagen')){
+            $proyecto['imagen'] = $request->file('imagen')->store('uploads','public');
+
+        }
+
+        Proyecto::where('id','=',$id)->update($proyecto);
+
+        $proyecto = Proyecto::findOrFail($id);
+
+
 
         return redirect()->route('proyectos.index')
             ->with('success', 'Proyecto updated successfully');

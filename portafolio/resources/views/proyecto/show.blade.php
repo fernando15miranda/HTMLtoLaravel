@@ -27,7 +27,7 @@
                         <div class="form-group">
                             <strong>Imagen:</strong>
                             <br />
-                            <img class="img-fluid" src=" {{$proyecto->imagen}} " alt="..." style="widh:400px; height:200px" />
+                            <img class="img-fluid" src=" {{$proyecto->imagen}} " alt="..." style="width:400px; height:200px" />
                         </div>
                         <div class="form-group">
                             <strong>Descripcion:</strong>

@@ -10,7 +10,7 @@
 
             {{ Form::label('imagen') }}
             <img class="img-fluid" src=" {{$proyecto->imagen}} " alt="..." style="width:150px" />
-            {{ Form::text('imagen', $proyecto->imagen, ['class' => 'form-control' . ($errors->has('imagen') ? ' is-invalid' : ''), 'placeholder' => 'Imagen']) }}
+            <input type="file" name="imagen" id="imagen" value="{{$proyecto->imagen}}">
             {!! $errors->first('imagen', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
